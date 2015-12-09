@@ -8,7 +8,7 @@ https://github.com/hbrobotics/ros_arduino_bridge
 
 */
 
-#include <Dagu4Motor.h>
+#include "Dagu4Motor.h"
 
 //Serial input
 // Variable to hold an input character
@@ -32,20 +32,20 @@ bool boolMove = false;
 unsigned time = millis();
 
 //Motors
-const int pwm_a = 4;  //PWM for CH1 LF
-const int pwm_b = 7;  //PWM for CH4 RR  - Revserved Encoder pins to make postive
-const int pwm_c = 9;  //PWM for CH2 LR
-const int pwm_d = 10;  //PWM for CH3 RF
-const int dir_a = 45;  //DIR for CH1
-const int dir_b = 43;  //DIR for CH4
-const int dir_c = 42;  //DIR for CH2
-const int dir_d = 44;  //DIR for CH3
+const int pwm_a = 3;  //PWM for CH1 LF
+const int pwm_b = 5;  //PWM for CH4 RR  - Revserved Encoder pins to make postive
+const int pwm_c = 6;  //PWM for CH2 LR
+const int pwm_d = 9;  //PWM for CH3 RF
+const int dir_a = 2;  //DIR for CH1
+const int dir_b = 4;  //DIR for CH4
+const int dir_c = 7;  //DIR for CH2
+const int dir_d = 8;  //DIR for CH3
 
 //Current Sensors
-const int CURRENTA = A12; 
-const int CURRENTB = A13; 
-const int CURRENTC = A14; 
-const int CURRENTD = A15; 
+const int CURRENTA = A2; 
+const int CURRENTB = A3; 
+const int CURRENTC = A4; 
+const int CURRENTD = A5; 
 const int CURRENT_LIMIT = (1024 / 5) * 2.6;  // amps
 
 //Encoder Interrupts
