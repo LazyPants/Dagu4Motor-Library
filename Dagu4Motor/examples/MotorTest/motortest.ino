@@ -61,17 +61,17 @@ const int encD2 = 49;
 
 
 
-Dagu4Motor motor1(pwm_a, dir_a, CURRENTA); 
-Dagu4Motor motor2(pwm_b, dir_b, CURRENTB); 
-Dagu4Motor motor3(pwm_c, dir_c, CURRENTC); 
-Dagu4Motor motor4(pwm_d, dir_d, CURRENTD); 
+Dagu4Motor motor1(pwm_a, dir_a, CURRENTA);  // CH1
+Dagu4Motor motor4(pwm_b, dir_b, CURRENTB);  // CH4
+Dagu4Motor motor2(pwm_c, dir_c, CURRENTC);  // CH2
+Dagu4Motor motor3(pwm_d, dir_d, CURRENTD);  // CH3
 
 void mReverse(int speed)
 {
 
 	motor1.setMotorDirection(true);
-	motor2.setMotorDirection(false);
-	motor3.setMotorDirection(true);
+	motor2.setMotorDirection(true);
+	motor3.setMotorDirection(false);
 	motor4.setMotorDirection(false);
 	motor1.setSpeed(speed);
         motor2.setSpeed(speed);
@@ -86,9 +86,9 @@ void mForward(int speed)
 {
 
 	motor1.setMotorDirection(false);
-	motor2.setMotorDirection(true);
-	motor3.setMotorDirection(false);
-	motor4.setMotorDirection(true);
+  motor2.setMotorDirection(false);
+  motor3.setMotorDirection(true);
+  motor4.setMotorDirection(true);
 	motor1.setSpeed(speed);
         motor2.setSpeed(speed);
         motor3.setSpeed(speed);
@@ -191,6 +191,11 @@ void setup(){
 
   Serial.begin(115200);
   Serial.println("Rover 5 Example Sketch");
+
+  motor1.begin();
+  motor2.begin();
+  motor3.begin();
+  motor4.begin();
 
 }
 
