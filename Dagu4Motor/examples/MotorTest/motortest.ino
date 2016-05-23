@@ -9,8 +9,11 @@ https://github.com/hbrobotics/ros_arduino_bridge
 */
 
 #include "Dagu4Motor.h"
+#include <SoftwareSerial.h>
 
 //Serial input
+SoftwareSerial mySerial(10, 11);
+
 // Variable to hold an input character
 char chr;
 
@@ -27,9 +30,9 @@ int index_ = 0;
 // The arguments converted to integers
 long arg1;
 
-bool boolMove = false;
+volatile bool boolMove = false;
 
-unsigned time = millis();
+volatile unsigned long time = millis();
 
 //Motors
 const int pwm_a = 3;  //PWM for CH1 LF
@@ -148,32 +151,32 @@ void runCommand(){
     switch (cmd){
     
       case 'f':
-            Serial.print("Forward: ");  
-            Serial.println(arg1);   
+            mySerial.print("Forward: ");  
+            mySerial.println(arg1);   
             mForward(arg1);
       break;
       
       case 'l':
-          Serial.print("Left: "); 
-          Serial.println(arg1);  
+          mySerial.print("Left: "); 
+          mySerial.println(arg1);  
           mLeft(arg1); 
       break;
       
       case 'r':
-         Serial.print("Right: ");
-         Serial.println(arg1);
+         mySerial.print("Right: ");
+         mySerial.println(arg1);
          mRight(arg1);     
       break;
       
       case 'b':
-        Serial.print("Reverse: "); 
-        Serial.println(arg1); 
+        mySerial.print("Reverse: "); 
+        mySerial.println(arg1); 
         mReverse(arg1);      
       break;
       
       case 's':
         mStop();
-        Serial.println("Stopped");
+        mySerial.println("Stopped");
       break;
   }
   
@@ -189,8 +192,10 @@ void runCommand(){
 
 void setup(){
 
-  Serial.begin(115200);
-  Serial.println("Rover 5 Example Sketch");
+  pinMode(10, INPUT);
+  pinMode(11, OUTPUT);
+  mySerial.begin(9600);
+  mySerial.println("Rover 5 Example Sketch");
 
   motor1.begin();
   motor2.begin();
@@ -205,10 +210,10 @@ void loop(){
   
   
 
-  while (Serial.available() > 0) {
+  while (mySerial.available() > 0) {
     
     // Read the next character
-    chr = Serial.read();
+    chr = mySerial.read();
 
     // Terminate a command with a CR
     if (chr == 13) {
@@ -243,19 +248,19 @@ void loop(){
  
   if (boolMove){
   
-    if(millis() > (time+1000)){
+    if(millis() > (time+3000)){
     
-      Serial.print("M1-Current: ");
-      Serial.println(motor1.getCurrent());
+      mySerial.print("M1-Current: ");
+      mySerial.println(motor1.getCurrent());
       
-      Serial.print("M2-Current: ");
-      Serial.println(motor2.getCurrent());
+      mySerial.print("M2-Current: ");
+      mySerial.println(motor2.getCurrent());
       
-      Serial.print("M3-Current: ");
-      Serial.println(motor3.getCurrent());
+      mySerial.print("M3-Current: ");
+      mySerial.println(motor3.getCurrent());
       
-      Serial.print("M4-Current: ");
-      Serial.println(motor4.getCurrent());
+      mySerial.print("M4-Current: ");
+      mySerial.println(motor4.getCurrent());
       
       time=millis();
     
